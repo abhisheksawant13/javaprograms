@@ -47,6 +47,10 @@ public class Utility {
 		return scanner.nextFloat();
 	}
 	
+	/**
+	 * @param number
+	 * @return
+	 */
 	public static boolean isPrime(int number) {
 		int count = 0;
 	
@@ -60,6 +64,18 @@ public class Utility {
         		else                                                    
            		return false;
    	}
+	public static int[] primeNumbers(int high,int low){
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		for(int i =0;i<=high;i++) {
+			list.add(Integer.valueOf(i));
+		}
+		int []primeArray =new int[list.size()];
+		for(int i =0;i<primeArray.length;i++) {
+			primeArray[i]=list.get(i).intValue();
+		}
+		return primeArray;
+		
+	}
 	/*
 	 * @param string1
 	 * 
@@ -505,7 +521,7 @@ public class Utility {
 			k++;
 			multiple++;
 			for(int j=0;j<array.length-1;j++) {
-					arrayTwoD[i][j]=primeArray[k];
+					arrayTwoD[i][j]=array[k];
 					if(arrayTwoD[i][j]<array[array.length-1]) {
 					if((array[k]>=100*multiple)) {
 						System.out.println();

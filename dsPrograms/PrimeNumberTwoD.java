@@ -10,7 +10,7 @@ public class PrimeNumberTwoD {
 				list.add(i);
 			}
 		}
-		int[] primeArray =new int[list.size()];
+		int []primeArray =new int[list.size()];
 		for(int i =0;i<primeArray.length;i++) {
 			primeArray[i]=list.get(i).intValue();
 		}

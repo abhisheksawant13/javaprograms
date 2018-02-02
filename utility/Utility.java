@@ -7,20 +7,19 @@
  *
  ******************************************************************************/
 package com.bridgelabz.utility;
-
-import java.awt.List;
-import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Utility {
 	static Scanner scanner;
+	private static LinkedList<Integer> list = new LinkedList<Integer>();
+	private static LinkedList<Integer> linkedlist = new LinkedList<Integer>();
 	public Utility() {
 		scanner = new Scanner(System.in);
 	}
@@ -434,31 +433,6 @@ public class Utility {
 			}
 		
 	}
-	
-	/*public static String[] sortElements(String[] actualString) { 
-    	int mid =actualString.length/2;
-        String []stringLeft = new String[mid];
-        String []stringRight = new String[mid];
-        for(int i=0;i<actualString.length;i++) {
-        	if(i<mid) {
-        		stringLeft[i] = actualString[i];
-        	}
-        	else {
-        		stringRight[i-mid] = actualString[i];
-        	}
-        }
-        String[] sortedString = new String[stringLeft.length + stringRight.length];
-
-        mergeSort(stringLeft);
-        mergeSort(stringRight);
-
-        merge(sortedString, stringLeft, stringRight);
-
-        mergeSort(sortedString);
-        //Arrays.sort;
-		return sortedString;
-    }*/
-
     public static String[] mergeSort(String[] string) {
         if (string.length >= 2) {
             String[] left = new String[string.length / 2];
@@ -493,24 +467,6 @@ public class Utility {
         }
     }
     
-    public static void unOrderedList(String[] string, String choice, String source) throws IOException {
-    	LinkedList<String> list = new LinkedList<String>();
-		for(int i =0;i<string.length;i++) {
-			list.add(string[i]);
-		}
-		if(list.contains(choice)) {
-			System.out.println("found at position "+list.indexOf(choice)+": Removing "+choice);
-			list.remove(choice);
-		}
-		else {
-			System.out.println("ITEM NOT FOUND: Adding "+choice+" at last");
-			list.addLast(choice);
-		}
-		for(String str:list) {
-			System.out.println(str);
-		}
-		}
-    
     
     public static void twoDMatrix(int[] primeArray) throws Exception{
 		int array[] =primeArray;
@@ -537,4 +493,67 @@ public class Utility {
 		}
 			}
 }
+    
+	public static void unOrderedList(String[] string, String choice, String source) throws IOException {
+		LinkedList<String> list = new LinkedList<String>();
+		for(int i =0;i<string.length;i++) {
+			list.add(string[i]);
+		}
+		if(list.contains(choice)) {
+			System.out.println("Found the entered string: Now Removing "+choice);
+			list.remove(choice);
+		}
+		else {
+			System.out.println("ITEM NOT FOUND: Adding "+choice+" at last");
+			list.add(choice);
+		}
+		System.out.println("Added to the List\n");
+		list.show();
+		String []string1 =list.returnCharArray();
+		System.out.print(string1);
+		//Write to file
+		FileWriter writer=new FileWriter("/home/bridgeit/Desktop/example.txt");  
+		BufferedWriter bufferwriter = new BufferedWriter(writer);
+		for(int i=0; i<string1.length;i++){
+		bufferwriter.write(string1[i]+" ");
+		}
+		bufferwriter.flush();
+		bufferwriter.close();
+		System.out.println("\nelements added to list");
+	}
+
+	public static void orderedList(int[] array, int choice, String source) throws IOException {
+		LinkedList<Integer> list = new LinkedList<Integer>();
+		for(int i =0;i<array.length;i++) {
+			list.add(array[i]);
+		}
+		if(list.contains(choice)) {
+			System.out.println("Found the entered string: Now Removing "+choice);
+			list.remove(choice);
+		}
+		else {
+			System.out.println("ITEM NOT FOUND: Adding "+choice+" at last");
+			list.add(choice);
+			System.out.println("Added to the List\n");
+		}
+		//list.show();
+		int []integerList = list.returnIntArray();
+		System.out.println("Sorted Array is ");
+		int sortedArray[] = bubbleSort(integerList);
+		for (int i = 0; i < sortedArray.length; i++) {
+			System.out.print(" "+sortedArray[i]);
+		}
+		addToFile(sortedArray, source);
+	}
+	
+	public static void addToFile(int []sortedArray,String source) throws IOException {
+		FileWriter writer=new FileWriter(source);  
+		BufferedWriter bufferwriter = new BufferedWriter(writer);
+		for(int i=0; i<sortedArray.length;i++){
+		bufferwriter.write(sortedArray[i]+" ");
+		}
+		bufferwriter.flush();
+		bufferwriter.close();
+		System.out.println("elements added to list");
+	}
 }

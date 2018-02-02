@@ -11,7 +11,7 @@ public class PrimeNumberTwoD {
 			}
 		}
 		int []primeArray =new int[list.size()];
-		for(int i =0;i<primeArray.length;i++) {
+		for(int i =0;i<primeArray.length;i++){
 			primeArray[i]=list.get(i).intValue();
 		}
 		Utility.twoDMatrix(primeArray);

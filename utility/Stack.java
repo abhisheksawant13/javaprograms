@@ -1,73 +1,42 @@
 package com.bridgelabz.utility;
 
-public class Stack {
-	 
-    private int stackSize;
-    private int[] stackArr;
-    private int top;
+public class Stack<T extends Object> {
  
-    /**
-     * constructor to create stack with size
-     * @param size
-     */
+    private int size;
+    private T[] stackArray;
+    private int top;
+   
     public Stack(int size) {
-        this.stackSize = size;
-        this.stackArr = new int[stackSize];
+        this.size = size;
+        this.stackArray = (T[]) new Object[size];
         this.top = -1;
     }
- 
-    /**
-     * This method adds new entry to the top 
-     * of the stack
-     * @param entry
-     * @throws Exception 
-     */
-    public void push(int entry) throws Exception {
-        if(this.isStackFull()){
-            throw new Exception("Stack is already full. Can not add element.");
-        }
-        System.out.println("Adding: "+entry);
-        this.stackArr[++top] = entry;
-    }
- 
-    /**
-     * This method removes an entry from the 
-     * top of the stack.
-     * @return
-     * @throws Exception 
-     */
-    public int pop() throws Exception {
-        if(this.isStackEmpty()){
-            throw new Exception("Stack is empty. Can not remove element.");
-        }
-        int entry = this.stackArr[top--];
-        System.out.println("Removed entry: "+entry);
-        return entry;
-    }
-     
-    /**
-     * This method returns top of the stack
-     * without removing it.
-     * @return
-     */
-    public int peek() {
-        return stackArr[top];
-    }
- 
-    /**
-     * This method returns true if the stack is 
-     * empty
-     * @return
-     */
     public boolean isStackEmpty() {
         return (top == -1);
     }
  
-    /**
-     * This method returns true if the stack is full
-     * @return
-     */
     public boolean isStackFull() {
-        return (top == stackSize - 1);
+        return (top == size - 1);
+    }
+    
+    public void push(T data){
+        if(this.isStackFull()){
+            System.out.println(("Stack is full. Cannot Push into Stack"));
+        }
+        System.out.println("Adding: "+data);
+        this.stackArray[++top] = data;
+    }
+ 
+    public T pop() throws Exception {
+        if(this.isStackEmpty()){
+            throw new Exception("Stack is empty. Can not remove element.");
+        }
+        T entry = this.stackArray[top--];
+        System.out.println("Removed entry: "+entry);
+        return entry;
+    }
+     
+    public T peek() {
+        return stackArray[top];
     }
 }

@@ -6,7 +6,7 @@ import java.util.Scanner;
 import com.bridgelabz.utility.Utility;
 
 public class PrimeAnag extends PrimeNumberTwoD{
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter a number where uptil you want prime numbers");
 		int range = scanner.nextInt();
@@ -35,5 +35,9 @@ public class PrimeAnag extends PrimeNumberTwoD{
 				System.out.println();
 			}
 		
+}*/
+	public static void main(String[] args) {
+		Utility.primeAnagaramDs();
+		
+	}
 }
-		}

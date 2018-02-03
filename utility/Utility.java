@@ -17,9 +17,11 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Utility {
+	private static int Cash = 100000;
 	static Scanner scanner;
 	private static LinkedList<Integer> list = new LinkedList<Integer>();
 	private static LinkedList<Integer> linkedlist = new LinkedList<Integer>();
+	
 	public Utility() {
 		scanner = new Scanner(System.in);
 	}
@@ -63,10 +65,12 @@ public class Utility {
         		else                                                    
            		return false;
    	}
-	public static int[] primeNumbers(int high,int low){
+	public static int[] primeNumbers(int high){
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		for(int i =0;i<=high;i++) {
+			if(isPrime(i)) {
 			list.add(Integer.valueOf(i));
+		}
 		}
 		int []primeArray =new int[list.size()];
 		for(int i =0;i<primeArray.length;i++) {
@@ -556,4 +560,144 @@ public class Utility {
 		bufferwriter.close();
 		System.out.println("elements added to list");
 	}
-}
+
+	public static boolean balancedParenthesis(char[] expressionArray) throws Exception {
+		Stack<Character> stack = new Stack<Character>(expressionArray.length);
+		//int stacksize=0;
+		//method to solve the testcase
+		for (int j = 0; j < expressionArray.length; j++) {
+			if(expressionArray[j]=='(') {
+				stack.push('(');
+				//stacksize++;
+			}
+			else if(expressionArray[j]==')') {
+				//stacksize--;
+				stack.pop();
+			}
+		}
+		return stack.isStackEmpty();
+	}
+
+	public static boolean ispalindromeCheckerDs(String inputString) {
+		Queue<Character> queue = new Queue<Character>();
+		boolean value = false;
+		char []inputCharacters = inputString.toCharArray();
+		
+		//enquing characters to the queue
+		for(int i = 0;i<inputCharacters.length;i++) {
+			queue.enqueue(inputCharacters[i]);
+		}
+		
+		//dequing the queue to check the value
+		for(int i =inputCharacters.length-1;i>=0;i--) {
+			char check = queue.dequeue();
+			if(inputCharacters[i]!=check) {
+				value= false;
+				break;
+			}
+			else {
+				value =true;
+			}
+		}
+		return value;
+	}
+
+	public static void twoDArrayList() {
+		//Creating 2D list
+		ArrayList<ArrayList<Integer>> twoDList = new ArrayList<ArrayList<Integer>>();
+		for(int i=0;i<10;i++) {
+			twoDList.add(new ArrayList<Integer>());
+		}
+		//getting prime numbers
+		int []primeArray = new int[1000];
+		int k = 0;
+		for(int i =0;i<1000;i++) {
+			if(isPrime(i)) {
+				primeArray[k++]=i;
+		}
+		}
+	    //Adding Prime Numbers to the List
+		int multiple =0;
+		int j;
+		int l=0;
+		for(int i = 0;i<10;i++) {
+			multiple++;
+			for(j=l;j<primeArray.length;j++) {
+				twoDList.get(i).add(primeArray[j]);
+				if(primeArray[j]>=100*multiple) {
+					l=j;
+					break;
+				}
+			}
+			l=j;
+			j++;
+		}
+		//Displaying 2D Array
+		for(int i=0;i<10;i++) {
+			for(j =0;j<twoDList.get(i).size();j++) {
+				if(twoDList.get(i).get(j)==primeArray[primeArray.length-1]) {
+					break;
+				}
+				System.out.print(" "+twoDList.get(i).get(j));
+			}
+			System.out.println();
+		}
+	}
+
+	public static void primeAnagaramDs() {
+		//Accepting prime numbers as String
+		String[]primeArray = checkPrime(1000);
+		ArrayList<ArrayList<String>> anagramList = new ArrayList<ArrayList<String>>();
+		for(int i = 0;i<2;i++) {
+			anagramList.add(new ArrayList<String>());
+		}
+		//Adding Anagram to the ArrayList
+		 for (int i = 0; i < primeArray.length; i++) 
+	        {
+				for (int j = i + 1; j < primeArray.length; j++) 
+				{
+					if (Utility.checkAnagarm(primeArray[i], primeArray[j]))
+					{
+						anagramList.get(0).add(primeArray[i]);
+						anagramList.get(0).add(primeArray[j]);
+					}
+				else {
+						anagramList.get(1).add(primeArray[j]);
+				}
+			}
+	        }
+		
+		//Displaying 2D Array
+			for(int i=0;i<2;i++) {
+				for(int j =0;j<anagramList.get(i).size();j++) {
+					/*if(anagramList.get(i).get(j)==primeArray[primeArray.length-1]) {
+						break;*/
+					System.out.print(" "+anagramList.get(i).get(j));
+				}
+				System.out.println();
+			}
+		}
+		}
+	/*public static void bankingCashCounter(int numberOfPeople) {
+		Queue<Integer> queue = new Queue<Integer>();
+		int availableBalance=Cash;
+		int choice;
+		for(int  i=0;i<numberOfPeople;i++) {
+			System.out.println("Person No"+i+"\n What do you want to do? :Withdraw or Deposit\nFor Withdraw Press 1\nDeposit press 2");
+				choice =scanner.nextInt();
+				if(choice!=1||choice!=2) {
+					System.out.println("Sorry Choose a Valid Action : Choose Again");
+					i--;
+				}
+				if(choice==1||choice==2) {
+					switch (choice) {
+					case 1:
+						System.out.println("Enter The Amount You want to withdraw");
+						int amountToWithdraw =scanner.nextInt();
+						if(amountToWithdraw<Cash) {
+							queue
+						}
+					}
+				}
+		}
+	}*/

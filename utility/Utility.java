@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Utility {
@@ -677,7 +678,61 @@ public class Utility {
 				System.out.println();
 			}
 		}
+/*----------------------------------------------------------------------------------------------*/
+	public static void stackAnagram() throws Exception {
+		String[]primeArray = checkPrime(1000)
+				;
+		//Saving anagrams that are Prime number
+		ArrayList<String> list = new ArrayList<String>();
+		for (int i = 0; i < primeArray.length; i++) {
+			for (int j = i + 1; j < primeArray.length; j++) {
+				if (Utility.checkAnagarm(primeArray[i], primeArray[j])) {
+					list.add(primeArray[i]);
+					list.add(primeArray[j]);
+				}
+			}
+        }
+		Stack<String> stack =new Stack<String>(list.size());
+		for (int i = 0; i < list.size(); i++) {
+			stack.push(list.get(i));
 		}
+		for (int i = 0; i < list.size(); i++) {
+			System.out.print(" "+stack.pop());
+		}
+	}
+/*----------------------------------------------------------------------------------------------*/
+	public static void queueAnagram() {
+		String[]primeArray = checkPrime(1000)
+				;
+		//Saving anagrams that are Prime number
+		ArrayList<String> list = new ArrayList<String>();
+		for (int i = 0; i < primeArray.length; i++) {
+			for (int j = i + 1; j < primeArray.length; j++) {
+				if (Utility.checkAnagarm(primeArray[i], primeArray[j])) {
+					list.add(primeArray[i]);
+					list.add(primeArray[j]);
+				}
+			}
+        }
+		Queue<String> queue =new Queue<String>();
+		for (int i = 0; i < list.size(); i++) {
+			queue.enqueue(list.get(i));
+		}
+		for (int i = 0; i < list.size(); i++) {
+			System.out.print(" "+queue.dequeue());
+		}
+	}
+
+	public static void bankingCashCounter(int numberOfPeople) {
+		
+	}
+	public class Person{
+		String name;
+		int balance; 
+	}
+}
+/*----------------------------------------------------------------------------------------------*/
+
 	/*public static void bankingCashCounter(int numberOfPeople) {
 		Queue<Integer> queue = new Queue<Integer>();
 		int availableBalance=Cash;

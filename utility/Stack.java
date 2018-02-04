@@ -23,7 +23,7 @@ public class Stack<T extends Object> {
         if(this.isStackFull()){
             System.out.println(("Stack is full. Cannot Push into Stack"));
         }
-        System.out.println("Adding: "+data);
+        //System.out.println("Adding: "+data);
         this.stackArray[++top] = data;
     }
  
@@ -32,7 +32,7 @@ public class Stack<T extends Object> {
             throw new Exception("Stack is empty. Can not remove element.");
         }
         T entry = this.stackArray[top--];
-        System.out.println("Removed entry: "+entry);
+        //System.out.println("Removed entry: "+entry);
         return entry;
     }
      

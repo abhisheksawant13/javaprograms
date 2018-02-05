@@ -13,11 +13,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import javax.print.attribute.standard.PrinterLocation;
+
 import com.bridgelabz.utility.People;
 
 public class Utility {
 	private static int Cash = 100000;
 	static Scanner scanner;
+	private static String[] months = {"","January","February","March","April","May","Jun","July","August","September"
+										,"Octomber","November","December"};
 	//private static LinkedList<Integer> list = new LinkedList<Integer>();
 	//private static LinkedList<Integer> linkedlist = new LinkedList<Integer>();
 	
@@ -662,10 +667,15 @@ public class Utility {
 						anagramList.get(0).add(primeArray[j]);
 					}
 				else {
-						anagramList.get(1).add(primeArray[j]);
+						anagramList.get(1).add(primeArray[i]);
 				}
 			}
 	        }
+		 /*for(int i =0;i<anagramList.get(0).size();i++) {
+			 if(anagramList.get(1).contains(anagramList.get(0).get(i))) {
+				 anagramList.get(1).remove(anagramList.get(0).get(i));
+			 }
+		 }*/
 		
 		//Displaying 2D Array
 			for(int i=0;i<2;i++) {
@@ -677,7 +687,7 @@ public class Utility {
 				System.out.println();
 			}
 		}
-/*----------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 	public static void stackAnagram() throws Exception {
 		String[]primeArray = checkPrime(1000)
 				;
@@ -699,7 +709,7 @@ public class Utility {
 			System.out.print(" "+stack.pop());
 		}
 	}
-/*----------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 	public static void queueAnagram() {
 		String[]primeArray = checkPrime(1000)
 				;
@@ -789,29 +799,141 @@ public class Utility {
 			
 		}
 	}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+	/**
+	 * @param mMonth
+	 * @param yYear
+	 * @return
+	 */
+	public static int dayOfWeek(int month ,int year) {
+		
+		   //we need to find the day i.e monday-sunday from where 1 starts 	
+		int y = year - (14 - month)/12;
+
+		//Checks for leap Year
+		int x = y + (y/4) - (y/100) + (y/400);
+
+		//Checks for month
+		int m = month + 12 * ((14 - month) / 12) - 2;
+
+		//Checks the value associated with Day i.e from 0 to 6 
+		//shows the day of the week where 1 starts
+		int day = (1 + x + (31 * m)/12)%7;
+	       
+	return day;
+	}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+	/**
+	 * @param month
+	 * @param year
+	 */
+	public static void calanderGenerator(int month, int year) {
+		int count=0;
+		int number =1;
+		int indexCounter =0;
+		int loopCounter =0;
+		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+		list.add(new ArrayList<String>());
+		list.add(new ArrayList<String>());
+		//to return the day where we will start the month
+		int day=dayOfWeek(month, year);
+		//making a list to store the days of the week
+		list.get(0).add("sun");list.get(0).add("mon");list.get(0).add("tue");list.get(0).add("wed");
+		list.get(0).add("thr");list.get(0).add("fri");list.get(0).add("sat");
+		
+		//array list for number of days that a month carries
+		int []daysOfTheMonths = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+		
+		//Setting feb as 29 if the year is leap
+		if(isLeap(year))
+			daysOfTheMonths[2]=29;
+		
+		//for(int i = 0; i < 7; i++ ) {
+			while(count < day) {
+				list.get(1).add("   ");
+                count++;
+			}
+			while(number<=daysOfTheMonths[month]) {
+				if(number<10)
+					list.get(1).add(" "+Integer.toString(number++)+" ");
+				else
+					list.get(1).add(Integer.toString(number++)+" ");
+				}
+			//to make sure that printing array doesnt runs out of loop
+			indexCounter =count+(number-1);
+		//}
+		System.out.println(months[month]+" "+year);
+		//Displaying the calendar
+		//1st dimension
+		for(int i=0;i<list.get(0).size();i++)
+			System.out.print(" "+list.get(0).get(i));
+			System.out.println();
+		//2nd Dimension
+		int k=0;
+		for(int i =0;i<6;i++) {
+			for(int j=0;j<7;j++) {
+				if(loopCounter==indexCounter)
+					break;
+				System.out.print(" "+list.get(1).get(k++));
+				loopCounter++;
+			}
+			System.out.println();
+		}
+	}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/**
+ * @param year
+ * @return
+ */
+private static boolean isLeap(int year) {
+	 if((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0)))
+         return true;
+     else 
+         return false;
+	 }
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/**
+ * @param month
+ * @param year
+ */
+public static void calanderGeneratorUsingQueue(int month, int year) {
+	int count=0;
+	int number =1;
+	Queue<Queue<String>> queue = new Queue<Queue<String>>();
+	for(int i=0;i<6;i++) {
+	queue.enqueue(new Queue<String>());
+	//to return the day where we will start the month
+	int day=dayOfWeek(month, year);
+	//making a Queue to store the days of the week
+	
+	queue.getAtPosition(0).enqueue("sun");queue.getAtPosition(0).enqueue("mon");queue.getAtPosition(0).enqueue("tue");
+	queue.getAtPosition(0).enqueue("wed");queue.getAtPosition(0).enqueue("thr");queue.getAtPosition(0).enqueue("fri");
+	queue.getAtPosition(0).enqueue("sat");
+	
+	//array list for number of days that a month carries
+	int []daysOfTheMonths = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+			
+	//Setting feb as 29 if the year is leap
+	if(isLeap(year))
+		daysOfTheMonths[2]=29;
+	
+	for(int j = 1; j < 7; j++ ) {
+		for(int k =0;k<7;k++) {
+			if(count < day) {
+				queue.getAtPosition(j).enqueue("   ");
+				count++;
+			}
+			else if(number<=daysOfTheMonths[month]) {
+				if(number<10)
+					queue.getAtPosition(j).enqueue(" "+Integer.toString(number++)+" ");
+				else
+				queue.getAtPosition(j).enqueue(Integer.toString(number++)+" ");
+			}
+	}
+}
+}
+}
 }
 /*----------------------------------------------------------------------------------------------*/
-
-	/*public static void bankingCashCounter(int numberOfPeople) {
-		Queue<Integer> queue = new Queue<Integer>();
-		int availableBalance=Cash;
-		int choice;
-		for(int  i=0;i<numberOfPeople;i++) {
-			System.out.println("Person No"+i+"\n What do you want to do? :Withdraw or Deposit\nFor Withdraw Press 1\nDeposit press 2");
-				choice =scanner.nextInt();
-				if(choice!=1||choice!=2) {
-					System.out.println("Sorry Choose a Valid Action : Choose Again");
-					i--;
-				}
-				if(choice==1||choice==2) {
-					switch (choice) {
-					case 1:
-						System.out.println("Enter The Amount You want to withdraw");
-						int amountToWithdraw =scanner.nextInt();
-						if(amountToWithdraw<Cash) {
-							queue
-						}
-					}
-				}
-		}
-	}*/

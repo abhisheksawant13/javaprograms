@@ -8,20 +8,18 @@
  ******************************************************************************/
 package com.bridgelabz.utility;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Scanner;
+import com.bridgelabz.utility.People;
 
 public class Utility {
 	private static int Cash = 100000;
 	static Scanner scanner;
-	private static LinkedList<Integer> list = new LinkedList<Integer>();
-	private static LinkedList<Integer> linkedlist = new LinkedList<Integer>();
+	//private static LinkedList<Integer> list = new LinkedList<Integer>();
+	//private static LinkedList<Integer> linkedlist = new LinkedList<Integer>();
 	
 	public Utility() {
 		scanner = new Scanner(System.in);
@@ -171,6 +169,7 @@ public class Utility {
 	/*
 	 * Function to check if Anagram
 	 */
+		@SuppressWarnings("unused")
 		public static boolean isAnagram(char[] strArr1, char[] strArr2) {
 			int count = 0;
 			for(int i =0;i<strArr1.length;i++) {
@@ -696,7 +695,7 @@ public class Utility {
 		for (int i = 0; i < list.size(); i++) {
 			stack.push(list.get(i));
 		}
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < list.size()/2; i++) {
 			System.out.print(" "+stack.pop());
 		}
 	}
@@ -718,17 +717,77 @@ public class Utility {
 		for (int i = 0; i < list.size(); i++) {
 			queue.enqueue(list.get(i));
 		}
-		for (int i = 0; i < list.size(); i++) {
-			System.out.print(" "+queue.dequeue());
+		for (int i = 0; i < list.size()/2; i++) {
+			System.out.println(" "+queue.dequeue()+" "+queue.dequeue());
 		}
 	}
 
-	public static void bankingCashCounter(int numberOfPeople) {
+	public static void bankingCashCounter(int numberOfPeople) throws Exception {
+		class People {
+			String name;
+			double balance; 
+			public People(String Name,double balance2) {
+				this.name=Name;
+				this.balance=balance2;
+				
+			}
+		}
+		Queue<People> queue = new Queue<People>();
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		double bankBalance = Cash;
+		//Counter enquing people
+		for(int i =0;i<numberOfPeople;i++) {
+			System.out.println("Customer "+(i+1)+"Enter Following Details");
+			System.out.println("Enter your Name");
+			String name = scanner.next();
+			System.out.println();
+			System.out.println("Enter your Balance");
+			double balance = scanner.nextDouble();
+			queue.enqueue(new People(name,balance));	
+		}
 		
-	}
-	public class Person{
-		String name;
-		int balance; 
+		//Service
+		for(int i =0;i<queue.size();) {
+			double personsBalance = queue.getAtPosition(i).balance;
+			String personsName =queue.getAtPosition(i).name;
+			System.out.println("Welcome "+personsName+ " What Service Do You Prefer");
+			System.out.println("1.Withdarw\n2.Deposit");
+			int choice = scanner.nextInt();
+			switch (choice) {
+			case 1:
+				System.out.println(personsName+" Enter the Amount you Want to withdraw");
+				double toWithdraw = scanner.nextInt();
+				if(personsBalance<toWithdraw) {
+					System.out.println("Sorry "+personsName+" You dont have Enough Balance");
+				}
+				else if(toWithdraw>bankBalance) {
+					System.out.println("Sorry "+personsName+" Bank DoesNot have Sufficient Fund for your Withdrawl");
+				}
+				else {
+					bankBalance -=toWithdraw;
+					personsBalance -=toWithdraw;
+					System.out.println("Transaction successful ");
+					System.out.println("Your Current Balance is "+personsBalance);
+				}
+				queue.dequeue();
+				break;
+			case 2:
+				System.out.println(personsName+" Enter the Amount you Want to Deposit");
+				double toDeposit = scanner.nextInt();
+					if(toDeposit<0) {
+						System.out.println("Enter a valid amount to deposit");
+					}
+					else {
+					bankBalance +=toDeposit;
+					personsBalance +=toDeposit;
+					System.out.println("Transaction successful ");
+					System.out.println("Your Current Balance is "+personsBalance);
+				}
+				queue.dequeue();
+			}
+			
+		}
 	}
 }
 /*----------------------------------------------------------------------------------------------*/

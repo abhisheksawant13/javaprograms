@@ -31,6 +31,9 @@ public class Queue<T> {
   public void removeAtFront(T item) {
 	  list.removeFirst();
   }
+  public T getAtPosition(int index) {
+	  return list.get((index));
+  }
 }
 /* public void addItems(Queue<? extends T> q) {
 while (q.hasItems())

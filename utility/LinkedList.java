@@ -1,13 +1,16 @@
 package com.bridgelabz.utility;
+
 public class LinkedList<T>{
 	 
     private Node<T> head;
     private Node<T> tail;
     private int size=0;
-    class Node<T> implements Comparable<T> {
+    @SuppressWarnings("hiding")
+	class Node<T> implements Comparable<T> {
         
         private T value;
         private Node<T> nextRef;
+		public  Node<T> prev;
          
         public T getValue() {
             return  value;
@@ -79,21 +82,10 @@ public class LinkedList<T>{
         }
     }
     
-    //Deletes the front 
-    public void delete(){
-         
-        if(head == null){
-            System.out.println("Underflow...");
-        }
-        Node<T> temp = head;
-        head = temp.getNext();
-        if(head == null){
-            tail = null;
-        }
-        size--;
-        System.out.println("Deleted: "+temp.getValue());
-    }
-     
+   
+    /**
+     * @param after
+     */
     public void deleteAfter(T after){
          
         Node<T> temp = head;
@@ -151,6 +143,9 @@ public boolean contains(T data) {
         return flag;
     }
     
+    /**
+     * @param data
+     */
     public void remove(T data) {
         if(head.value.equals(data)) {
             head = head.nextRef;
@@ -186,6 +181,10 @@ public boolean contains(T data) {
             temp = temp.getNext();
         }
     }
+    
+    /**
+     * @return
+     */
     public int[] returnIntArray() {
     int MyArr[] = new int[size];
     int i=0;
@@ -198,6 +197,9 @@ public boolean contains(T data) {
     return MyArr;
     }
     
+    /**
+     * @return
+     */
     public String[] returnCharArray() {
     	String stringArray[] = new String[size];
     	int i =0;
@@ -208,4 +210,29 @@ public boolean contains(T data) {
     	}
     	return stringArray;
     	}
+    
+    //Deletes the front 
+    /**
+     * 
+     */
+    public void delete(){
+         
+        if(head == null){
+            System.out.println("Underflow...");
+        }
+        Node<T> temp = head;
+        head = temp.getNext();
+        if(head == null){
+            tail = null;
+        }
+        size--;
+        System.out.println("Deleted: "+temp.getValue());
+    }
 }
+   /* public T deleteATLast() {
+    	if(head==null)
+    		return null;
+    	Node<T> temp1 =head;
+    		if(temp1.nextRef.nextRef==null) {
+    			temp1.nextRef = null;
+    		}*/

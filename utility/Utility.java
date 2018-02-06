@@ -7,14 +7,17 @@
  *
  ******************************************************************************/
 package com.bridgelabz.utility;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
-
-import javax.print.attribute.standard.PrinterLocation;
 
 import com.bridgelabz.utility.People;
 
@@ -904,10 +907,10 @@ public static void calanderGeneratorUsingQueue(int month, int year) {
 	Queue<Queue<String>> queue = new Queue<Queue<String>>();
 	for(int i=0;i<6;i++) {
 	queue.enqueue(new Queue<String>());
+	}
 	//to return the day where we will start the month
 	int day=dayOfWeek(month, year);
 	//making a Queue to store the days of the week
-	
 	queue.getAtPosition(0).enqueue("sun");queue.getAtPosition(0).enqueue("mon");queue.getAtPosition(0).enqueue("tue");
 	queue.getAtPosition(0).enqueue("wed");queue.getAtPosition(0).enqueue("thr");queue.getAtPosition(0).enqueue("fri");
 	queue.getAtPosition(0).enqueue("sat");
@@ -931,9 +934,157 @@ public static void calanderGeneratorUsingQueue(int month, int year) {
 				else
 				queue.getAtPosition(j).enqueue(Integer.toString(number++)+" ");
 			}
+		}
+    }
+	System.out.println(" "+months[month]+" "+year);
+	for(int i=0;i<6;i++) {
+		for(int j =0;j<7;j++) {
+			String date =queue.getAtPosition(i).dequeue();
+			if(date==null) {
+				break;
+			}
+			System.out.print(" "+date);
+		}
+		System.out.println();
 	}
 }
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/**
+ * this method is used to calculate the calander using stack(Implemented using linked list)
+ * @param month
+ * @param year
+ */
+public static void calanderUsingStack(int month, int year) {
+	int count=0;
+	int number =1;
+	int indexCounter =0;
+	int loopCounter =0;
+	StackUsingLinkedList<String> stack1=new StackUsingLinkedList<>();
+	StackUsingLinkedList<String> stack2 = new StackUsingLinkedList<String>();
+	String []weekDays = {"sun","mon","tue","wed","thr","fri","sat"};
+	
+	//array list for number of days that a month carries
+	int []daysOfTheMonths = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+			
+	//Setting feb as 29 if the year is leap
+	if(isLeap(year))
+		daysOfTheMonths[2]=29;
+	
+	//to return the day where we will start the month
+	int day=dayOfWeek(month, year);		
+	
+	//for(int i = 0; i < 7; i++ ) {
+	while(count < day) {
+		stack1.push("   ");
+	    count++;
+	}
+	while(number<=daysOfTheMonths[month]) {
+		if(number<10)
+			stack1.push(" "+Integer.toString(number++)+" ");
+		else
+			stack1.push(Integer.toString(number++)+" ");
+	}
+	//to make sure that printing array doesnt runs out of loop
+	indexCounter =count+(number-1);
+	
+	//moving elements from one stack to another
+	for(int i=stack1.size()-1;i>=0;i--) {
+		stack2.push(stack1.pop());
+	}
+	
+	//Displaying the Calander
+	//month and year
+	System.out.println(" "+months[month]+" "+year);
+	//days of the week
+	for (int i = 0; i < weekDays.length; i++) {
+		System.out.print(" "+weekDays[i]);
+	}
+	System.out.println();
+	int k=0;
+	for(int i =0;i<6;i++) {
+		for(int j=0;j<7;j++) {
+			if(loopCounter==indexCounter)
+				break;
+			System.out.print(" "+stack2.pop());
+			loopCounter++;
+		}
+		System.out.println();
 }
 }
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/**
+ * @param choice
+ * @throws IOException 
+ */
+public static void hashingFunction(int choice) throws IOException {
+	boolean found = false;
+	int position =0;
+	//Reading file
+	BufferedReader br = new BufferedReader(new FileReader("/home/bridgeit/Desktop/number.txt"));
+	String filestring[] = br.readLine().split(" ");
+	br.close();
+	//converting the string to array of integers
+	int[] intArray = Arrays.stream(filestring).mapToInt(Integer::parseInt).toArray();
+	//creating hashMap
+	HashMap<Integer,LinkedList<Integer>> hashMap = new HashMap<Integer,LinkedList<Integer>>();
+	for(int i =0;i<11;i++) {
+		hashMap.put(i,new LinkedList<Integer>());
+	}
+	for(int i=0;i<intArray.length;i++) {
+		int remainder = intArray[i]%11;
+		switch (remainder) {
+		case 0:
+			hashMap.get(0).add(intArray[i]);
+			break;
+		case 1:
+			hashMap.get(1).add(intArray[i]);
+			break;
+		case 2:
+			hashMap.get(2).add(intArray[i]);
+			break;
+		case 3:
+			hashMap.get(3).add(intArray[i]);
+			break;
+		case 4:
+			hashMap.get(4).add(intArray[i]);
+			break;
+		case 5:
+			hashMap.get(5).add(intArray[i]);
+			break;
+		case 6:
+			hashMap.get(6).add(intArray[i]);
+			break;
+		case 7:
+			hashMap.get(7).add(intArray[i]);
+			break;
+		case 8:
+			hashMap.get(8).add(intArray[i]);
+			break;
+		case 9:
+			hashMap.get(9).add(intArray[i]);
+			break;
+		case 10:
+			hashMap.get(10).add(intArray[i]);
+			break;
+		}
+	}
+	for(int i =0;i<10;i++) {
+		if(hashMap.get(i).contains(choice)) {
+			hashMap.get(i).remove(choice);
+			System.out.println("found your number in the slot number: "+i+" Removing the Number");
+			found = true;
+		}
+	}
+	if(found==false) {
+		position = choice%11;
+		hashMap.get(position).add(choice);
+		System.out.println("Added the entered number to the slot no. "+position);
+	}
+	
+	for(int i=0;i<10;i++) {
+		System.out.print("{ At Slot ["+i+"] :");hashMap.get(i).show();System.out.print("}");System.out.print(" ");
+	}
+	}
 }
 /*----------------------------------------------------------------------------------------------*/

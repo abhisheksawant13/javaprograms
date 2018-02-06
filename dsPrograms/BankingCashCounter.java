@@ -11,6 +11,7 @@ public class BankingCashCounter {
 		System.out.println("Enter The Number of People Today at bank");
 		int numberOfPeople = scanner.nextInt();
 		Utility.bankingCashCounter(numberOfPeople);
+		scanner.close();
 	}
 
 }

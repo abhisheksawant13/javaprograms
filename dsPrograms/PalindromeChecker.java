@@ -14,5 +14,6 @@ public class PalindromeChecker {
 			System.out.println("Entered String is Palindrome");
 		else
 			System.out.println("Entered String is not Palindrome");
+		scanner.close();
 	}
 }

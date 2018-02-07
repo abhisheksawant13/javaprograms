@@ -16,45 +16,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Scanner;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import com.bridgelabz.oopmPrograms.JsonInventory;
 import com.bridgelabz.utility.People;
 
+@SuppressWarnings("unused")
 public class Utility {
-	private static int Cash = 100000;
 	static Scanner scanner;
+	private static int Cash = 100000;
 	private static String[] months = {"","January","February","March","April","May","Jun","July","August","September"
 										,"Octomber","November","December"};
 	//private static LinkedList<Integer> list = new LinkedList<Integer>();
-	//private static LinkedList<Integer> linkedlist = new LinkedList<Integer>();
-	
-	public Utility() {
-		scanner = new Scanner(System.in);
+	//private static LinkedList<Integer> linkedlist = new LinkedList<Integer>();	
+	public static Scanner startScanner() {
+		return scanner=new Scanner(System.in);
 	}
-
-	public static String getString() {
-		return scanner.nextLine();
-	}
-	public static String getStringSingle() {
-		return scanner.next();
-	}
-	public int getInteger() {
-		return scanner.nextInt();
-	}
-
-	public double getDouble() {
-		return scanner.nextDouble();
-	}
-
-	public boolean getBoolean() {
-		return scanner.nextBoolean();
-	}
-
-	public float getFloat() {
-		return scanner.nextFloat();
-	}
-	
+	/*
+	public static void stopScanner() {
+		scanner.close();
+	}*/
 	/**
 	 * @param number
 	 * @return
@@ -1000,7 +986,6 @@ public static void calanderUsingStack(int month, int year) {
 		System.out.print(" "+weekDays[i]);
 	}
 	System.out.println();
-	int k=0;
 	for(int i =0;i<6;i++) {
 		for(int j=0;j<7;j++) {
 			if(loopCounter==indexCounter)
@@ -1086,5 +1071,142 @@ public static void hashingFunction(int choice) throws IOException {
 		System.out.print("{ At Slot ["+i+"] :");hashMap.get(i).show();System.out.print("}");System.out.print(" ");
 	}
 	}
+
+@SuppressWarnings("unchecked")
+public static void jasonInventory() throws IOException {
+	startScanner();
+	JSONObject inventory = new JSONObject();
+	
+	//taking types of rice
+	JSONArray rice = new JSONArray();
+	System.out.println("Enter how many types of rice Do you Have");
+	int numberOfRice = scanner.nextInt();
+	for(int i=0;i<numberOfRice;i++){
+		JSONObject typeOfRice = new JSONObject();
+		System.out.println("Enter the Name of the Rice "+(i+1));
+		String riceName = scanner.next();
+		typeOfRice.put("Name", riceName);
+		
+		//weight of rice
+		System.out.println("Enter the weight of Rice in Kg's");
+		int weightOfRice = scanner.nextInt();
+		typeOfRice.put("weight", weightOfRice);
+		
+		//Price of Rice
+		System.out.println("Enter the price of Rice per kg");
+		int priceOfRice = scanner.nextInt();
+		typeOfRice.put("price", priceOfRice);
+		rice.add(typeOfRice);
+		System.out.println();
+	}
+	inventory.put("Rice", rice);
+	
+	//taking types of wheat
+	JSONArray wheat = new JSONArray();
+	System.out.println("Enter how many types of wheat Do you Have");
+	int numberOFwheat = scanner.nextInt();
+	for(int i=0;i<numberOFwheat;i++){
+		JSONObject typeOfWheat = new JSONObject();
+		System.out.println("Enter the Name of the wheat "+(i+1));
+		String wheatName = scanner.next();
+		typeOfWheat.put("Name", wheatName);
+		
+		//weight of rice
+		System.out.println("Enter the weight of wheat in Kg's");
+		int weightOfWheat = scanner.nextInt();
+		typeOfWheat.put("weight", weightOfWheat);
+		
+		//Price of Rice
+		System.out.println("Enter the price of wheat per kg");
+		int priceOfwheat = scanner.nextInt();
+		typeOfWheat.put("price", priceOfwheat);
+		wheat.add(typeOfWheat);
+		System.out.println();
+	}
+	inventory.put("Wheat", wheat);
+	
+	//taking types of pulses
+	JSONArray pulses = new JSONArray();
+	System.out.println("Enter how many types of pulses Do you Have");
+	int numberOFPulses = scanner.nextInt();
+	for(int i=0;i<numberOFPulses;i++){
+		JSONObject typeOfPulses = new JSONObject();
+		System.out.println("Enter the Name of the pulses "+(i+1));
+		String pulseName = scanner.next();
+		typeOfPulses.put("Name", pulseName);
+		
+		//weight of rice
+		System.out.println("Enter the weight of pulses in Kg's");
+		int weightOfPulse = scanner.nextInt();
+		typeOfPulses.put("weight", weightOfPulse);
+		
+		//Price of Rice
+		System.out.println("Enter the price of pulses per kg");
+		int priceOfPulse = scanner.nextInt();
+		typeOfPulses.put("price", priceOfPulse);
+		pulses.add(typeOfPulses);
+		System.out.println();
+	}
+	inventory.put("Pulses", pulses);
+	String []arrayofInventory = inventory.toJSONString().split("]");
+	for (int i = 0; i < arrayofInventory.length; i++) {
+		System.out.println(arrayofInventory[i]);
+	}
+	System.out.println();
+	valueCalculation(inventory);
+	writeToDirectory(inventory);
+}
+
+public static void valueCalculation(JSONObject inventory) {
+	startScanner();
+	float valueOfItem = 0;
+	System.out.println("Enter the Type Of Item:");
+	String itemType=scanner.next();
+	scanner.nextLine();
+	System.out.println("Enter the Name of the item that you want");
+	String itemName=scanner.nextLine();
+		JSONArray item=(JSONArray)inventory.get(itemType);
+		for(int i=0;i<item.size();i++) {
+			JSONObject gotItem=(JSONObject)item.get(i);
+			if(String.valueOf(gotItem.get("Name")).equals(itemName)) {
+				long weight=(long) gotItem.get("weight");
+				long price=(long) gotItem.get("price");
+				valueOfItem=weight*price;
+				System.out.println("The Total Value Of "+itemName+" :"+valueOfItem);
+			}
+		}
+	}
+/**
+ * @param inventory
+ * @throws IOException
+ */
+private static void writeToDirectory(JSONObject inventory) throws IOException {
+	Scanner scanner = new Scanner(System.in);
+	System.out.println("Enter the Source where you want to write the file");
+	String source = scanner.next();
+	scanner.nextLine();
+	FileWriter fileWriter = new FileWriter(source);
+	fileWriter.write(inventory.toJSONString());
+	fileWriter.close();
+	System.out.println("Syccessfully Wrote the file");
+	scanner.close();
+}
+/**
+ * @param fileName
+ * @return 
+ * @throws FileNotFoundException
+ * @throws IOException
+ * @throws ParseException
+ */
+public static JSONObject readFromInventory(String fileName) throws FileNotFoundException, IOException, ParseException {
+	JSONParser parser = new JSONParser();
+	Object obj = parser.parse(new FileReader(fileName));
+    JSONObject jsonObject =  (JSONObject) obj;
+    String []arrayofInventory = jsonObject.toJSONString().split("]");
+	for (int i = 0; i < arrayofInventory.length; i++) {
+		System.out.println(arrayofInventory[i]);
+	}
+	return jsonObject;
+}
 }
 /*----------------------------------------------------------------------------------------------*/

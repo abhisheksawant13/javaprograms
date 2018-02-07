@@ -1,14 +1,16 @@
 package com.bridgelabz.algorithmsPrograms;
 
+import java.util.Scanner;
+
 import com.bridgelabz.utility.Utility;
 
 public class PrimeAnagPalindrome 
 {
 	public static void main(String[] args) 
-	{
+	{	Scanner scanner = Utility.startScanner();
 		Utility utility=new Utility();
 		System.out.println("Enter the limit");
-		int limit =utility.getInteger();
+		int limit =scanner.nextInt();
         System.out.println("Prime numbers between 1 and " + limit);
         String [] strArray=Utility.checkPrime(limit);
         for(int i=0;i<strArray.length;i++)

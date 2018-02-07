@@ -22,18 +22,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import com.bridgelabz.oopmPrograms.JsonInventory;
 import com.bridgelabz.utility.People;
 
-@SuppressWarnings("unused")
 public class Utility {
 	static Scanner scanner;
-	private static int Cash = 100000;
-	private static String[] months = {"","January","February","March","April","May","Jun","July","August","September"
+	private static int CASH = 100000;
+	private static String[] MONTHS = {"","January","February","March","April","May","Jun","July","August","September"
 										,"Octomber","November","December"};
-	//private static LinkedList<Integer> list = new LinkedList<Integer>();
-	//private static LinkedList<Integer> linkedlist = new LinkedList<Integer>();	
+	public static String MESSAGE = "Hello <<name>>, We have your full name as <<full name>> in our system. your contact number is 91-xxxxxxxxxx.Please,let us know in case of any clarification Thank you BridgeLabz 01/01/2016.";
 	public static Scanner startScanner() {
 		return scanner=new Scanner(System.in);
 	}
@@ -734,7 +730,7 @@ public class Utility {
 		Queue<People> queue = new Queue<People>();
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
-		double bankBalance = Cash;
+		double bankBalance = CASH;
 		//Counter enquing people
 		for(int i =0;i<numberOfPeople;i++) {
 			System.out.println("Customer "+(i+1)+"Enter Following Details");
@@ -851,7 +847,7 @@ public class Utility {
 			//to make sure that printing array doesnt runs out of loop
 			indexCounter =count+(number-1);
 		//}
-		System.out.println(months[month]+" "+year);
+		System.out.println(MONTHS[month]+" "+year);
 		//Displaying the calendar
 		//1st dimension
 		for(int i=0;i<list.get(0).size();i++)
@@ -922,7 +918,7 @@ public static void calanderGeneratorUsingQueue(int month, int year) {
 			}
 		}
     }
-	System.out.println(" "+months[month]+" "+year);
+	System.out.println(" "+MONTHS[month]+" "+year);
 	for(int i=0;i<6;i++) {
 		for(int j =0;j<7;j++) {
 			String date =queue.getAtPosition(i).dequeue();
@@ -980,7 +976,7 @@ public static void calanderUsingStack(int month, int year) {
 	
 	//Displaying the Calander
 	//month and year
-	System.out.println(" "+months[month]+" "+year);
+	System.out.println(" "+MONTHS[month]+" "+year);
 	//days of the week
 	for (int i = 0; i < weekDays.length; i++) {
 		System.out.print(" "+weekDays[i]);
@@ -1071,6 +1067,7 @@ public static void hashingFunction(int choice) throws IOException {
 		System.out.print("{ At Slot ["+i+"] :");hashMap.get(i).show();System.out.print("}");System.out.print(" ");
 	}
 	}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 
 @SuppressWarnings("unchecked")
 public static void jasonInventory() throws IOException {
@@ -1156,6 +1153,7 @@ public static void jasonInventory() throws IOException {
 	valueCalculation(inventory);
 	writeToDirectory(inventory);
 }
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 
 public static void valueCalculation(JSONObject inventory) {
 	startScanner();
@@ -1176,6 +1174,7 @@ public static void valueCalculation(JSONObject inventory) {
 			}
 		}
 	}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * @param inventory
  * @throws IOException
@@ -1191,6 +1190,7 @@ private static void writeToDirectory(JSONObject inventory) throws IOException {
 	System.out.println("Syccessfully Wrote the file");
 	scanner.close();
 }
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * @param fileName
  * @return 
@@ -1207,6 +1207,13 @@ public static JSONObject readFromInventory(String fileName) throws FileNotFoundE
 		System.out.println(arrayofInventory[i]);
 	}
 	return jsonObject;
+}
+/*---------------------------------------------------------------------------------------------------------------------------------------------*/
+/**
+ * 
+ */
+public static void regrexDemo() {
+	
 }
 }
 /*----------------------------------------------------------------------------------------------*/
